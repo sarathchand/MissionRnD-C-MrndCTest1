@@ -32,6 +32,76 @@ Difficulty : Medium
 #include <math.h>
 
 int * find_sequences(int *arr, int len){
-	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	return NULL;
+
+	int i, c = 0, start, end, c1 = 0, *res, p = 0;
+	res = (int*)malloc(sizeof(int)* 6);
+	if ((arr != NULL) && (len >= 1))
+	{
+
+		for (i = 0; i < len - 2; i++)
+		{
+			if (((arr[i + 1] - arr[i]) == (arr[i + 2] - arr[i + 1])) && (c == 0))
+			{
+				res[p] = i;
+				start = i;
+				c = 1;
+				p++;
+			}
+			if (!((arr[i + 1] - arr[i]) == (arr[i + 2] - arr[i + 1])) && (c == 1))
+			{
+				end = i;
+				res[p] = i + 1;
+				p++;
+				c = 2;
+			}
+		}
+		c = 0;
+		for (i = 0; i < len - 2; i++)
+		{
+			if (((arr[i + 1] - arr[i]) == (arr[i + 2] - arr[i + 1])) && (c == 0) && (i != start) && (i != end))
+			{
+				res[p] = i;
+				c = 1;
+				p++;
+			}
+			if (!((arr[i + 1] - arr[i]) == (arr[i + 2] - arr[i + 1])) && (c == 1) && (i != start) && (i != end))
+			{
+				end = i;
+				res[p] = i + 1;
+				p++;
+				c = 2;
+			}
+		}
+		c = 0;
+		for (i = 0; i < len - 2; i++)
+		{
+			if ((((float)((arr[i + 1] % arr[i]))) == ((float)((arr[i + 2] % arr[i + 1])))) && (c == 0))
+			{
+				start = i;
+				res[p] = i;
+				p++;
+				c = 1;
+			}
+			if ((((float)((arr[i + 1] % arr[i]))) != ((float)((arr[i + 2] % arr[i + 1])))) && (c == 1))
+			{
+				start = i;
+				res[p] = i;
+				p++;
+				c = 7;
+			}
+
+
+
+		}
+		if (c != 7)
+		{
+			res[p] = len - 1;
+		}
+		return res;
+	}
+	else
+	{
+		return NULL;
+	}
+
 }
